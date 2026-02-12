@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchRandomUser } from "./services/userApi";
+import { fetchUser } from "./services/userApi";
 import { type User } from "./types/user";
 import "./App.css";
 
@@ -14,7 +14,7 @@ function App() {
   const addUser = async () => {
     setIsLoading(true);
     try {
-      const newUser = await fetchRandomUser();
+      const newUser = await fetchUser();
       setUsers((prevUsers) => [...prevUsers, newUser]);
     } catch (error) {
       console.error("Error fetching random user:", error);
@@ -40,7 +40,7 @@ function App() {
 
       <div className="user-list">
         {users.map((user) => (
-          <div key={user.userId} className="user-card">
+          <div key={user.name.first + user.userId} className="user-card">
             <img
               src={user.picture.thumbnail}
               alt={`${user.name.first} ${user.name.last}`}
